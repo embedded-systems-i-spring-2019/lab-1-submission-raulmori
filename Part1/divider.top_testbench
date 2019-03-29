@@ -1,0 +1,57 @@
+-- Notice that  this testbench works in a similar way to the testbench of clock.div. Here we manually input the test values
+--of the clock, by simulating a clock PERIOD.
+--This CLOCK PERIOD is simulated on the called "divider.top" and "clock.div"
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+
+entity divider_top_tb is
+end divider_top_tb;
+
+
+architecture divider_top_tb_arch of divider_top_tb is
+    signal tb_clk   : std_logic := '0';  --We set a test clock to "0"
+    signal tb_led0   : std_logic := '0';    --we set a test led0 to "0"
+    signal tb_div   : std_logic;        --We make a temporary output for "div" 
+    
+        component divider_top is    --Here we actually call all of "divider.top" by calling its entity values
+        port(   clk	    : in	std_logic;
+                led0    : out    std_logic); 
+        end component;
+        
+    
+        component clock_div is       --Here we actually call all of "clock.div" by calling its entity values
+        port(   clk     : in    std_logic;
+                div     : out   std_logic);
+        end component;
+        
+            begin  --Notice that the "clk" of both components are the same
+
+                 dut1: divider_top  --This just exchange the values of the component entities into the temporary values
+                               port map(
+                                   clk => tb_clk,      --Here we put the entity "clk" of divider.top into temporary "tb_clk"
+                                   led0 => tb_led0     --Here we put the entity "led0" of divider.top into temporary "tb_led0" of divider.top testbench
+                               );
+                           
+                           
+                 dut2: clock_div
+                               port map(
+                                   clk => tb_clk,   --Here we put the entity "clk" of clock.div into temporary "tb_clk"  of divider.top testbench
+                                   div => tb_div       --Here we put the entity "div" from clock.div into temporary "tb_div"  of divider.top testbench
+                               );
+                               
+                               
+                               
+                 clk_proc: process   -- Since we know the mechanical clock has a frequency of 125MHz, then it has a 8ns period
+                                begin   --This is the actual simulation of the divider.top
+                                    wait for 4 ns;  --This is half a period of a tick
+                                    tb_clk <= '1';  --First  4ns, the output of the clock is on high
+                                    wait for 4 ns;
+                                    tb_clk <= '0';   --For the remaining 4ns, the output of the clock is low
+                           end process clk_proc;
+                
+               
+    
+end divider_top_tb_arch;
