@@ -1,0 +1,43 @@
+--In this testbench We ONLY WORK WITH MANUALLY SIMULATING THE CLOCK. While  temporary "div" gets automtically outputed through the port
+--Remember that the simulation of "div" will occur through the LED's
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.Numeric_std.all;
+
+
+entity tb_clock_div is
+end tb_clock_div;
+
+
+architecture clk_tb of tb_clock_div is
+    signal clk : std_logic := '0';    --This is a temporary "clk" to store the "clk" from entity
+    signal div : std_logic := '0';    --This is a temporary "clk" to store the "clk" from entity
+
+
+    component clock_div  --create component of original clock-divider (remember this is like an entity but it's not an "entity")
+              port (
+                clk : in std_logic;
+                div : out std_logic   --This is the Output part of the testbench
+              );
+    end component;
+
+        
+ 
+    begin
+            dut: clock_div port map       --We create a port-map here to transfer the "componenet" (entity) values to the temporary values
+                                  (clk => clk,  
+                                   div => div);
+            --Here is where "begin" ends                       
+                                     
+            process begin         --declare process. we assume the entire process has a frequency of 125Mhz which is 8ns. Remember that a period lasts 8ns, and the resing edge and falling edge will be split between the period
+                    --case #2
+                          clk <= '1';       --clock is high
+                          wait for 4 ns;    --It will last half the period (a period is 8ns)
+                          
+                    --case #2
+                          clk <= '0';             --clock is low
+                          wait for 4 ns;         --It will last half the period (a period is 8ns)
+            end process;
+      
+end clk_tb;
