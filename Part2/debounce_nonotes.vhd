@@ -1,4 +1,6 @@
 --The OUTPUT of the "BUTTON" being HIGH or LOW depends only on the number of "COUNTS"
+--Since we have a 125Mhz Clock, then our debounce time is 6250000 Clock-Ticks (1Hz, or 1 second)
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
