@@ -1,5 +1,4 @@
---The point of this counter is that we will only get an output after the counter has counted a "number" of times for a certain entitiy input called "btn"
-
+--The OUTPUT of the "BUTTON" being HIGH or LOW depends only on the number of "COUNTS"
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -12,7 +11,6 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
---declare entity
 entity debounce is          --Remember the entitiy values are values that the user manually inputs into the system
           Port (
                 clk: in std_logic;
