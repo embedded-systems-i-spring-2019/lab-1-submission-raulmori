@@ -20,7 +20,7 @@ architecture clk_div of clock_div is
                                     count <= std_logic_vector( unsigned(count) + 1 );    --Here, for every rising edge of the input-CLOCK, we increment the signal by 1
 
                             else --once you reach 62.5MHZ (more than 62499999  counts). This is where the SIGNAL reaches the "DIVISION-RATIO".
-                                    count <= (others => '0');   --Here we reset the temporary "counter"
+                                    count <= (others => '0');   --Here we reset the temporary "counter". The counter is reset when it reaches the reaches the "DIVISION-RATIO"
                                     div <= '1';                 --a "1" is given to the output value of "div". Remember we work with the output "div" not the counter.
                             end if;
                      end if;    --Here we end the original "if"
